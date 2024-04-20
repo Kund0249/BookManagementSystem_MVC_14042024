@@ -20,7 +20,24 @@ namespace BookManagementSystem_MVC_14042024.Controllers
         {
             _publisherRepository = new PublisherRepository();
         }
-         
+
+        [HttpGet] //http verbs
+        public ViewResult Index()
+        {
+            //List<PublisherModel> models = _publisherRepository.
+            //                               GetPublishers.
+            //                               Select(x => new PublisherModel()
+            //                               {
+            //                                   PublisherId = x.PublisherId,
+            //                                   PublisherName = x.PublisherName,
+            //                                   RegistrationId = x.RegistrationId
+            //                               }).ToList();
+            List<PublisherModel> models = _publisherRepository.
+                                           GetPublishers.
+                                           Select(x => PublisherModel.Convert(x)).ToList();
+            return View(models);
+        }
+
         [HttpGet] //http verbs
         public ViewResult Create()
         {
@@ -30,12 +47,37 @@ namespace BookManagementSystem_MVC_14042024.Controllers
         [HttpPost]
         public ViewResult Create(PublisherModel model)
         {
-           
-            if (_publisherRepository.Save(PublisherModel.Convert(model)))
+            if (_publisherRepository.Save(PublisherModel.Convert(model),out string StatusCode))
             {
                 ModelState.Clear();
             }
             return View(model);
         }
+
+
+        [HttpGet] //http verbs
+        public ActionResult Edit(int id)
+        {
+           PublisherModel model =  PublisherModel.Convert(_publisherRepository.GetPublisher(id));
+
+            if (model != null)
+                return View(model);
+            else
+                return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        public ActionResult Edit(PublisherModel model)
+        {
+            if (_publisherRepository.Save(PublisherModel.Convert(model),out string StatusCode))
+            {
+                if(StatusCode == "U001")
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+            return View(model);
+        }
+
     }
 }

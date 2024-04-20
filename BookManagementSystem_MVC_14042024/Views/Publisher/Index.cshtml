@@ -1,0 +1,55 @@
+﻿@model List<BookManagementSystem_MVC_14042024.Models.PublisherModel>
+  
+@* Data strored inside the Model Property*@
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Content/css/bootstrap.css" rel="stylesheet" />
+    <style>
+        .ImageIcons{
+            height : 25px;
+            width:25px;
+        }
+    </style>
+    <title>Index</title>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-6 offset-3">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Registration Number</th>
+                            <th>Publication Name</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                        <tr>
+                            <td>@item.RegistrationId</td>
+                            <td>@item.PublisherName</td>
+                            <td>
+                                <a href="/Publisher/Edit/@item.PublisherId">
+                                    <img src="~/Content/Icons/edit.png" class="ImageIcons" />
+                                </a>
+                                <img src="~/Content/Icons/delete.jpg" class="ImageIcons" />
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

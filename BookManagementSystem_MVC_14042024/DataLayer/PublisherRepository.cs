@@ -16,27 +16,99 @@ namespace BookManagementSystem_MVC_14042024.DataLayer
         {
             CS = ConfigurationManager.ConnectionStrings["DbCon"].ConnectionString;
         }
-        public bool Save(PublisherEntity entity)
+
+        public List<PublisherEntity> GetPublishers
+        {
+            get
+            {
+                List<PublisherEntity> list = new List<PublisherEntity>();
+                try
+                {
+                    using (SqlConnection connection = new SqlConnection(CS))
+                    {
+                        SqlCommand cmd = new SqlCommand(SdProcedures.GetPublisher, connection);
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+                        connection.Open();
+                        SqlDataReader reader = cmd.ExecuteReader();
+                        if (reader.HasRows)
+                        {
+                            while (reader.Read())
+                            {
+                                list.Add(new PublisherEntity()
+                                {
+                                    PublisherId = Convert.ToInt32(reader["PublisherId"]),
+                                    PublisherName = reader["PublisherName"].ToString(),
+                                    RegistrationId = reader["RegNo"].ToString()
+                                });
+                            }
+                        }
+                        connection.Close();
+                    }
+                    return list;
+                }
+                catch (Exception)
+                {
+                    return null;
+                }
+
+            }
+        }
+
+        public PublisherEntity GetPublisher(int PublisherId)
         {
             try
             {
-                using(SqlConnection connection = new SqlConnection(CS))
+                PublisherEntity entity = null;
+                using (SqlConnection connection = new SqlConnection(CS))
+                {
+                    SqlCommand cmd = new SqlCommand(SdProcedures.GetPublisher, connection);
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@PublisherId", PublisherId);
+                    connection.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            entity = new PublisherEntity()
+                            {
+                                PublisherId = Convert.ToInt32(reader["PublisherId"]),
+                                PublisherName = reader["PublisherName"].ToString(),
+                                RegistrationId = reader["RegNo"].ToString()
+                            };
+                        }
+                    }
+                    connection.Close();
+                    return entity;
+                }
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+        public bool Save(PublisherEntity entity,out string StatusCode)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(CS))
                 {
                     SqlCommand cmd = new SqlCommand(SdProcedures.AddPublisher, connection);
                     cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
                     cmd.Parameters.AddWithValue("@RegNo", entity.RegistrationId);
                     cmd.Parameters.AddWithValue("@PublisherName", entity.PublisherName);
-
+                    cmd.Parameters.AddWithValue("@PublisherId", entity.PublisherId);
                     connection.Open();
-                    cmd.ExecuteNonQuery();
+                    StatusCode = cmd.ExecuteScalar().ToString();
                     connection.Close();
                 }
                 return true;
             }
             catch (Exception)
             {
-
+                StatusCode = string.Empty;
                 return false;
             }
         }

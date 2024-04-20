@@ -9,6 +9,7 @@ namespace BookManagementSystem_MVC_14042024.Utility
     {
         #region Publisher Procedres
         public static string AddPublisher = "spInsertPublisher";
+        public static string GetPublisher = "spGetPublisher";
         #endregion
     }
 }
