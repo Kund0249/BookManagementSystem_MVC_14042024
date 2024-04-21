@@ -5,10 +5,11 @@ using System.Web;
 using System.Web.Mvc;
 using BookManagementSystem_MVC_14042024.Models;
 using BookManagementSystem_MVC_14042024.DataLayer;
+//using System.Web.Script.Serialization;
 
 namespace BookManagementSystem_MVC_14042024.Controllers
 {
-    public class PublisherController : Controller
+    public class PublisherController : BaseController
     {
         //Action Method
         //1 => Public
@@ -38,18 +39,22 @@ namespace BookManagementSystem_MVC_14042024.Controllers
             return View(models);
         }
 
-        [HttpGet] //http verbs
+        [HttpGet]
         public ViewResult Create()
         {
             return View();
         }
 
         [HttpPost]
-        public ViewResult Create(PublisherModel model)
+        public ActionResult Create(PublisherModel model)
         {
-            if (_publisherRepository.Save(PublisherModel.Convert(model),out string StatusCode))
+            if (_publisherRepository.Save(PublisherModel.Convert(model), out string StatusCode))
             {
-                ModelState.Clear();
+                //var js = new JavaScriptSerializer();
+                //var message = js.Serialize("Record Save Successfully!");
+                //TempData["Message"] = message;
+                Notify("Success", "Record Save Successfully!", NotificationType.success);
+                return RedirectToAction(nameof(Index));
             }
             return View(model);
         }
@@ -58,7 +63,7 @@ namespace BookManagementSystem_MVC_14042024.Controllers
         [HttpGet] //http verbs
         public ActionResult Edit(int id)
         {
-           PublisherModel model =  PublisherModel.Convert(_publisherRepository.GetPublisher(id));
+            PublisherModel model = PublisherModel.Convert(_publisherRepository.GetPublisher(id));
 
             if (model != null)
                 return View(model);
@@ -69,11 +74,17 @@ namespace BookManagementSystem_MVC_14042024.Controllers
         [HttpPost]
         public ActionResult Edit(PublisherModel model)
         {
-            if (_publisherRepository.Save(PublisherModel.Convert(model),out string StatusCode))
+            if (_publisherRepository.Save(PublisherModel.Convert(model), out string StatusCode))
             {
-                if(StatusCode == "U001")
+                if (StatusCode == "U001")
                 {
+                    Notify("Update", "Record Updated Successfully!", NotificationType.success);
                     return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    Notify("Error", "system not able to process this request!", NotificationType.error);
+
                 }
             }
             return View(model);

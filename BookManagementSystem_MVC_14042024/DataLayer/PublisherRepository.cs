@@ -54,7 +54,6 @@ namespace BookManagementSystem_MVC_14042024.DataLayer
 
             }
         }
-
         public PublisherEntity GetPublisher(int PublisherId)
         {
             try

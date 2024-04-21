@@ -91,11 +91,16 @@
     <Content Include="Content\css\bootstrap.css" />
     <Content Include="Content\Icons\delete.jpg" />
     <Content Include="Content\Icons\edit.png" />
+    <Content Include="Content\jquery\jquery.js" />
+    <Content Include="Content\toastr\toastr.css" />
+    <Content Include="Content\toastr\toastr.min.js" />
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AuthorController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\PublisherController.cs" />
     <Compile Include="DataLayer\DataEntity\PublisherEntity.cs" />
     <Compile Include="DataLayer\PublisherRepository.cs" />
@@ -113,6 +118,9 @@
     <Content Include="Views\Publisher\Create.cshtml" />
     <Content Include="Views\Publisher\Index.cshtml" />
     <Content Include="Views\Publisher\Edit.cshtml" />
+    <Content Include="Views\Shared\_Notification.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -122,6 +130,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Author\" />
+    <Folder Include="Views\Base\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
