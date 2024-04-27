@@ -1,4 +1,4 @@
-﻿@model List<BookManagementSystem_MVC_14042024.Models.PublisherModel>
+﻿@model BookManagementSystem_MVC_14042024.Models.PublisherWrapper
 
 @* Data strored inside the Model Property*@
 
@@ -15,6 +15,47 @@
 }
 
 
+
+<div class="row">
+    <div class="col-6 offset-3">
+        <nav aria-label="Page navigation">
+            <ul class="pagination">
+
+                @if (Model.pager.TotalPage > 1)
+                {
+                    if (Model.pager.CurrentPage > 1)
+                    {
+                        @Html.ActionLink("Previous", "Index", new { pageno = Model.pager.CurrentPage - 1 }, new { @class = "page-link" })
+
+                    }
+                    else
+                    {
+                        <li class="page-item"><a class="page-link disabled" href="#">Previous</a></li>
+                    }
+
+                    for (int i = Model.pager.StartPage; i <= Model.pager.EndPage; i++)
+                    {
+                        <li class="page-item">
+                            @Html.ActionLink(i.ToString(), "Index", new { pageno = i }, new { @class = "page-link" })
+                        </li>
+                    }
+
+                    if (Model.pager.CurrentPage < Model.pager.TotalPage)
+                    {
+                        @Html.ActionLink("Next", "Index", new { pageno = Model.pager.CurrentPage + 1 }, new { @class = "page-link" })
+
+                    }
+                    else
+                    {
+                        <li class="page-item"><a class="page-link disabled" href="#">Next</a></li>
+                    }
+                }
+            </ul>
+        </nav>
+    </div>
+</div>
+
+
 <div class="row">
     <div class="col-6 offset-3">
         <table class="table">
@@ -26,7 +67,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model)
+                @foreach (var item in Model.publishers)
                 {
                     <tr>
                         <td>@item.RegistrationId</td>

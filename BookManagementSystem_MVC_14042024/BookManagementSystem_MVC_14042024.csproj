@@ -107,7 +107,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Pager.cs" />
     <Compile Include="Models\PublisherModel.cs" />
+    <Compile Include="Models\PublisherWrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utility\SdProcedures.cs" />
   </ItemGroup>

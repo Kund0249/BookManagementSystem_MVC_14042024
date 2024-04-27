@@ -23,20 +23,42 @@ namespace BookManagementSystem_MVC_14042024.Controllers
         }
 
         [HttpGet] //http verbs
-        public ViewResult Index()
+        public ViewResult Index(int pageno = 1)
         {
-            //List<PublisherModel> models = _publisherRepository.
-            //                               GetPublishers.
-            //                               Select(x => new PublisherModel()
-            //                               {
-            //                                   PublisherId = x.PublisherId,
-            //                                   PublisherName = x.PublisherName,
-            //                                   RegistrationId = x.RegistrationId
-            //                               }).ToList();
+            //int TotalRowPerPage = 5;
+            //int TotalPage = 0;
+            //int StarPage = 0;
+            //int EndPage = 0;
+
+            int totalrows;
             List<PublisherModel> models = _publisherRepository.
-                                           GetPublishers.
+                                           GetPublishers(pageno, 5, out totalrows).
                                            Select(x => PublisherModel.Convert(x)).ToList();
-            return View(models);
+
+            int TotalPage = (int)Math.Ceiling((double)totalrows / 5);
+
+            //Pager pager = new Pager()
+            //{
+            //    CurrentPage = pageno,
+            //    StartPage = Math.Max(1, Math.Min(pageno - 3, totalrows - 6)),
+            //    EndPage = Math.Min(pageno+6,TotalPage),
+            //    TotalPage = TotalPage
+            //};
+
+            Pager pager = new Pager()
+            {
+                CurrentPage = pageno,
+                StartPage = (pageno <= 7 ? 1:pageno+1),
+                EndPage = Math.Min((pageno <= 7 ? 7 : pageno + 7), TotalPage),
+                TotalPage = TotalPage
+            };
+
+            PublisherWrapper wrapper = new PublisherWrapper()
+            {
+                publishers = models,
+                pager = pager
+            };
+            return View(wrapper);
         }
 
         [HttpGet]
