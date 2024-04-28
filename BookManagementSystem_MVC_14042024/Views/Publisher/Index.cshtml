@@ -18,40 +18,7 @@
 
 <div class="row">
     <div class="col-6 offset-3">
-        <nav aria-label="Page navigation">
-            <ul class="pagination">
-
-                @if (Model.pager.TotalPage > 1)
-                {
-                    if (Model.pager.CurrentPage > 1)
-                    {
-                        @Html.ActionLink("Previous", "Index", new { pageno = Model.pager.CurrentPage - 1 }, new { @class = "page-link" })
-
-                    }
-                    else
-                    {
-                        <li class="page-item"><a class="page-link disabled" href="#">Previous</a></li>
-                    }
-
-                    for (int i = Model.pager.StartPage; i <= Model.pager.EndPage; i++)
-                    {
-                        <li class="page-item">
-                            @Html.ActionLink(i.ToString(), "Index", new { pageno = i }, new { @class = "page-link" })
-                        </li>
-                    }
-
-                    if (Model.pager.CurrentPage < Model.pager.TotalPage)
-                    {
-                        @Html.ActionLink("Next", "Index", new { pageno = Model.pager.CurrentPage + 1 }, new { @class = "page-link" })
-
-                    }
-                    else
-                    {
-                        <li class="page-item"><a class="page-link disabled" href="#">Next</a></li>
-                    }
-                }
-            </ul>
-        </nav>
+        @Html.Partial("_Pagination", Model.pager)
     </div>
 </div>
 
@@ -73,10 +40,18 @@
                         <td>@item.RegistrationId</td>
                         <td>@item.PublisherName</td>
                         <td>
-                            <a href="/Publisher/Edit/@item.PublisherId">
-                                <img src="~/Content/Icons/edit.png" class="ImageIcons" />
-                            </a>
-                            <img src="~/Content/Icons/delete.jpg" class="ImageIcons" />
+                            @using (Html.BeginForm("Delete", "Publisher", new { id = item.PublisherId }, FormMethod.Post))
+                            {
+                                <a href="/Publisher/Edit/@item.PublisherId">
+                                    <img src="~/Content/Icons/edit.png" class="ImageIcons" />
+                                </a>
+
+                                <button type="submit" class="btn"
+                                        onclick="return confirm('Are you sure?')">
+                                    <img src="~/Content/Icons/delete.jpg" class="ImageIcons" />
+                                </button>
+                            }
+
                         </td>
                     </tr>
                 }

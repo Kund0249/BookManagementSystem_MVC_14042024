@@ -1,0 +1,61 @@
+﻿@model BookManagementSystem_MVC_14042024.Models.BookModel
+
+
+
+@using (Html.BeginForm("Create","Book",FormMethod.Post,htmlAttributes:new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+    <h4>BookModel</h4>
+    <hr />
+
+    <div class="form-group">
+        <label class="control-label col-md-2">Upload Image</label>
+        <div class="col-md-10">
+            @Html.TextBoxFor(x => x.BookImage,htmlAttributes:new {type="file",@class="form-control"})
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2">Book Title</label>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2">ISBN</label>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.ISBN, new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2">Is Active</label>
+        <div class="col-md-10">
+            <div class="checkbox">
+                @Html.CheckBoxFor(model => model.IsActive)
+            </div>
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <label class="control-label col-md-2">Select Author</label>
+        <div class="col-md-10">
+            @Html.DropDownListFor(x => x.AuthorId, Model.Authors, "Select Author", new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Create" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

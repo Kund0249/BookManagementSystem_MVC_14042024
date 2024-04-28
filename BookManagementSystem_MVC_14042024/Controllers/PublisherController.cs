@@ -50,7 +50,9 @@ namespace BookManagementSystem_MVC_14042024.Controllers
                 CurrentPage = pageno,
                 StartPage = (pageno <= 7 ? 1:pageno+1),
                 EndPage = Math.Min((pageno <= 7 ? 7 : pageno + 7), TotalPage),
-                TotalPage = TotalPage
+                TotalPage = TotalPage,
+                ControllerName = "Publisher",
+                ActionName = "Index"
             };
 
             PublisherWrapper wrapper = new PublisherWrapper()
@@ -110,6 +112,13 @@ namespace BookManagementSystem_MVC_14042024.Controllers
                 }
             }
             return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult Delete(int id)
+        {
+            Notify("Removed", "Record : (Id : "+id+") removed successfully!", NotificationType.success);
+            return RedirectToAction(nameof(Index));
         }
 
     }
