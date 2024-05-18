@@ -110,6 +110,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\BookController.cs" />
     <Compile Include="Controllers\PublisherController.cs" />
+    <Compile Include="CustomFilters\ErrorHandler.cs" />
     <Compile Include="DataLayer\AuthorRepository.cs" />
     <Compile Include="DataLayer\BookRepository.cs" />
     <Compile Include="DataLayer\DataContext.cs" />
@@ -139,6 +140,8 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Pagination.cshtml" />
     <Content Include="Views\Book\Create.cshtml" />
+    <Content Include="Views\Book\Index.cshtml" />
+    <Content Include="Views\Shared\CustomError.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

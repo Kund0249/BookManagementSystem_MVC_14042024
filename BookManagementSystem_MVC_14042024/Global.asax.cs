@@ -1,3 +1,4 @@
+using BookManagementSystem_MVC_14042024.CustomFilters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,7 @@ namespace BookManagementSystem_MVC_14042024
         {
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+            GlobalFilters.Filters.Add(new ErrorHandler() { View = "CustomError" });
         }
     }
 }

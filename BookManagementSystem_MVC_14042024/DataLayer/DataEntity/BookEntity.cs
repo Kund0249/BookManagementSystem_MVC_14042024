@@ -7,6 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BookManagementSystem_MVC_14042024.DataLayer.DataEntity
 {
+    [Table("TBOOKS")]
     public class BookEntity
     {
         [Key]

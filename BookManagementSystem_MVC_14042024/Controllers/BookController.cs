@@ -1,4 +1,5 @@
-﻿using BookManagementSystem_MVC_14042024.DataLayer;
+﻿using BookManagementSystem_MVC_14042024.CustomFilters;
+using BookManagementSystem_MVC_14042024.DataLayer;
 using BookManagementSystem_MVC_14042024.Models;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using System.Web.Mvc;
 
 namespace BookManagementSystem_MVC_14042024.Controllers
 {
+    //[ErrorHandler(View = "CustomError")]
     public class BookController : BaseController
     {
         private readonly AuthorRepository authorRepository;
@@ -19,9 +21,14 @@ namespace BookManagementSystem_MVC_14042024.Controllers
             bookRepository = new BookRepository();
         }
         // GET: Book
+
+        //[ErrorHandler(View ="CustomError")]
         public ActionResult Index()
         {
-            return View();
+            int a = 10;
+            int b = 0;
+            int c = a / b;
+            return View(bookRepository.GetBooks);
         }
 
         [HttpGet]

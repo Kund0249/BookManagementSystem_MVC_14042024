@@ -1,4 +1,5 @@
 ﻿using BookManagementSystem_MVC_14042024.DataLayer.DataEntity;
+using BookManagementSystem_MVC_14042024.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,17 @@ namespace BookManagementSystem_MVC_14042024.DataLayer
             context = new DataContext();
         }
 
+        public List<BookModel> GetBooks
+        {
+            get
+            {
+               return context.Books.Select(x => new BookModel() { 
+                BookId = x.BookId,
+                Name = x.Name,
+                ISBN = x.ISBN
+                }).ToList();
+            }
+        }
         public bool AddBook(BookEntity entity)
         {
             try
@@ -22,7 +34,7 @@ namespace BookManagementSystem_MVC_14042024.DataLayer
                 context.SaveChanges();
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return false;
             }
