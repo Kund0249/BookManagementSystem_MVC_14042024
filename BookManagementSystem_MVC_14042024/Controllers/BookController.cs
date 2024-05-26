@@ -10,6 +10,8 @@ using System.Web.Mvc;
 namespace BookManagementSystem_MVC_14042024.Controllers
 {
     //[ErrorHandler(View = "CustomError")]
+
+    [Authorize]
     public class BookController : BaseController
     {
         private readonly AuthorRepository authorRepository;
@@ -25,13 +27,11 @@ namespace BookManagementSystem_MVC_14042024.Controllers
         //[ErrorHandler(View ="CustomError")]
         public ActionResult Index()
         {
-            int a = 10;
-            int b = 0;
-            int c = a / b;
             return View(bookRepository.GetBooks);
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
             BookModel model = new BookModel()
@@ -47,6 +47,7 @@ namespace BookManagementSystem_MVC_14042024.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public ActionResult Create(BookModel model)
         {
            if(model.BookImage != null)

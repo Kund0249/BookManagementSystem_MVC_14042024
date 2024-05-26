@@ -9,6 +9,7 @@ using BookManagementSystem_MVC_14042024.DataLayer;
 
 namespace BookManagementSystem_MVC_14042024.Controllers
 {
+    [Authorize(Roles = "Admin, Manager")]
     public class PublisherController : BaseController
     {
         //Action Method
@@ -23,6 +24,7 @@ namespace BookManagementSystem_MVC_14042024.Controllers
         }
 
         [HttpGet] //http verbs
+        [OutputCache(Duration =30)]
         public ViewResult Index(int pageno = 1)
         {
             //int TotalRowPerPage = 5;

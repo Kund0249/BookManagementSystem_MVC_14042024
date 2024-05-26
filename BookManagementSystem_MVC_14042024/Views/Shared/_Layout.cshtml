@@ -24,10 +24,10 @@
                         @Html.ActionLink("Book", "Index", "Book", null, new { @class = "nav-link active" })
                     </li>
                     <li class="nav-item">
-                        @Html.ActionLink("Author", "Index", "Author",null, new { @class = "nav-link active" })
+                        @Html.ActionLink("Author", "Index", "Author", null, new { @class = "nav-link active" })
                     </li>
                     <li class="nav-item">
-                        @Html.ActionLink("Publisher","Index","Publisher",null,new {@class="nav-link active" })
+                        @Html.ActionLink("Publisher", "Index", "Publisher", null, new { @class = "nav-link active" })
                     </li>
 
                     <li class="nav-item dropdown">
@@ -45,10 +45,24 @@
                         <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
                     </li>
                 </ul>
-                <form class="d-flex">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                    <partial name="_AccountNav" />
+                <form class="d-flex" method="post" action="/Account/Logout">
+
+                    @*<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">*@
+                    @if (HttpContext.Current.User.Identity.IsAuthenticated)
+                    {
+                        <label class="form-label me-2">
+                          Welcome - @HttpContext.Current.User.Identity.Name
+                        </label>
+                      
+                            <button class="btn btn-outline-success" type="submit">Logout</button>
+
+                       
+                    }
+                    else
+                    {
+                        <a class="btn btn-outline-success" href="/Account/Login">Login</a>
+                    }
+
                 </form>
             </div>
         </div>
